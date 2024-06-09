@@ -11,15 +11,16 @@ qit=(vc>vst);
 y=zeros(6,length(time));
 i=2;
 k=1;
+method = 'Gear' % Gear or Euler or Trap
 tic
 while k<=(length(time))
         if (qit(k)==1)
             
-            mode1();
+            mode1(method);
       
         else
         
-          mode23();
+          mode23(method);
      
         end
           
