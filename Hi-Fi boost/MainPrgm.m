@@ -1,55 +1,66 @@
 function MainPrgm
 clear 
+close
 clc
 set(0,'defaulttextinterpreter','Latex');
 global y i qit k  delta
 fs=50e3; vc=0.50;
-ts=1/fs; tmax=10*ts; delta=10^(-3)*ts;
+ts=1/fs; tmax=100*ts; delta=10^(-3)*ts;
 time=0:delta:tmax;
 vst=(time/ts)-fix((time/ts));
 qit=(vc>vst);
 y=zeros(6,length(time));
 i=2;
 k=1;
-method = 'Gear' % Gear or Euler or Trap
+method = 'Euler'; % Gear or Euler or Trap
 tic
 while k<=(length(time))
-        if (qit(k)==1)
+   if (qit(k)==1)
             
-            mode1(method);
+         mode1(method);
       
-        else
+   else
         
           mode23(method);
      
-        end
+   end
           
 k=k+1;
    
 end
 toc
 Y=y';
+ 
+Vo = Y(end,2) + Y(end, 5)*0.4 + 100e-12*((Y(end-1, 5)-Y(end, 5))/delta); % nearly Vo = vc+iLc*Rc + L delta(iLC)/dt
+disp(Vo)
 
     subplot(3,2,1)
-    plot(Y(:,1),'b') 
-    title('Inductor Current ')
+    plot(time, Y(3:end,1), 'LineWidth', 1.2) 
+    title('$i$')
+    set(gca,'FontSize',15, 'FontName', 'Times New Roman')
     
     subplot(3,2,2)
-   plot(Y(:,2),'b')
-    title('Capacitor Voltage')
+   plot(time, Y(3:end,2), 'LineWidth', 1.2)
+    title('$v_c$')
+    set(gca,'FontSize',15, 'FontName', 'Times New Roman')
     
      subplot(3,2,3)
-     plot(Y(:,3),'k')
-     title('switch-inductor current ')
-     
+    plot(time, Y(3:end,3), 'LineWidth', 1.2)
+     title('$i_{Ls}$')
+     set(gca,'FontSize',15, 'FontName', 'Times New Roman')
+
       subplot(3,2,4)
-       plot(Y(:,4),'b')
-      title('switch-capacitor Voltage')
+      plot(time, Y(3:end,4), 'LineWidth', 1.2)
+      title('$v_{cs}$')
+      set(gca,'FontSize',15, 'FontName', 'Times New Roman')
+
       subplot(3,2,5)
-       plot(Y(:,5),'b')
-      title('output-inductor current')
+       plot(time, Y(3:end,5), 'LineWidth', 1.2)
+      title('$i_{Lc}$')
+      set(gca,'FontSize',15, 'FontName', 'Times New Roman')
+
       subplot(3,2,6)
-       plot(Y(:,6),'b')
-      title('diode-capacitor Voltage ')
-   
+       plot(time, Y(3:end,6), 'LineWidth', 1.2)
+      title('$v_d$')
+      set(gca,'FontSize',15, 'FontName', 'Times New Roman')   
 end

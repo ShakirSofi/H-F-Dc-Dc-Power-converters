@@ -1,9 +1,16 @@
 function gg=mode1(method)
-global i   
+global i y
+
 vin=10;
 Vd_on = 0.61;
 RL=0.1; L=100e-6;   Ls=20e-9;  Rson=0.2; Cs=200e-12; Cdoff=100e-12; Rdoff=40e6; Rc=0.4; Lc=100e-12; C=42e-6;
 Ro= 20;
+
+if (y(3,i) <= 0 && y(2, i)>Vd_on)
+    s  = 0; % diode off
+else
+    s = 1;
+end
 
 A1 = [ (-RL - Ro)/L  0  Ro/L  0  Ro/L  -1/L ;
              0  0  0  0  1/C 0;
@@ -16,7 +23,7 @@ B1 = [1/L  0 ;
     0  0 ;
     0  0;
     0  0;
-    0 0/(Cdoff*Rdoff)];
+    0 s/(Cdoff*Rdoff)];
 
 
 C1 = eye(6);

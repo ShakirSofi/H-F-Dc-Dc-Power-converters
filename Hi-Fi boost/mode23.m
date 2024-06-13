@@ -1,9 +1,15 @@
 function hh=mode23(method)
-global i   
+global i y 
 vin=10;
 Vd_off = 0.61;
 RL=0.1; L=100e-6;   Ls=20e-9;  Rsoff=2e6; Cs=200e-12; Cdon=15e-12; Rdon=50e-3; Rc=0.4; Lc=100e-12; C=42e-6;
 Ro= 20;
+
+if (y(3,i)<= 0 && y(2, i)>Vd_off)
+    s  = 1; % diode on
+else
+    s = 0;
+end
 
 A0 = [ (-RL - Ro)/L  0  Ro/L  0  Ro/L  -1/L ;
              0  0  0  0  1/C 0;
@@ -16,7 +22,7 @@ B0 = [1/L  0 ;
     0  0 ;
     0  0;
     0  0;
-    0 0/(Cdon*Rdon)];
+    0 s/(Cdon*Rdon)];
 
 
 C0 = eye(6);
