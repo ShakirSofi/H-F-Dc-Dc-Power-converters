@@ -1,5 +1,5 @@
 function hh=mode23(method)
-global i   
+global i y  
 vin=-12;
 Vd_off = 0.7;
 Ls = 10e-6;
@@ -10,6 +10,12 @@ Rload = 10;
 Rd_off = 10e3;
 Lc = 10e-9;
 Rc = 1;
+
+if (y(2, i)<Vd_off)&&(y(3, i)<0)
+    s  = 0; % diode off
+else
+    s = 1;
+end
 A0 = [ (-Rser - Rload)/Ls      -1/Ls      Rload/Ls      0;
     1/Cd          -1/(Rd_off*Cd)  0      0;
     Rload/Lc         0          (-Rload - Rc)/Lc   -1/Lc;
