@@ -30,10 +30,11 @@ k=k+1;
 end
 toc
 Y=y';
- 
-Vo = Y(end,2) + Y(end, 5)*0.4 + 100e-12*((Y(end-1, 5)-Y(end, 5))/delta); % nearly Vo = vc+iLc*Rc + L delta(iLC)/dt
-disp(Vo)
 
+% Vo = vc+iLc*Rc + L delta(iLC)/dt
+Vo = Y(end,2) + Y(end, 5)*0.4 + 100e-12*((Y(end-1, 5)-Y(end, 5))/delta); 
+disp('Output voltage V_o =')
+disp(Vo)
     subplot(3,2,1)
     plot(time, Y(3:end,1), 'LineWidth', 1.2) 
     title('$i$')
